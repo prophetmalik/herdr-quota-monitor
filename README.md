@@ -53,9 +53,15 @@ powershell -ExecutionPolicy Bypass -File .\install.ps1
 ```
 
 ### Método 2: Con un Agente de Herdr
-Indícale a tu agente dentro de Herdr:
+Copia y pega cualquiera de estas instrucciones en la terminal de un agente dentro de Herdr:
+
 ```text
-Lee RECIPE.md de este repositorio e instala el mod herdr-quota-monitor.
+Lee https://github.com/prophetmalik/herdr-quota-monitor y sigue las instrucciones de su archivo RECIPE.md para instalar el mod herdr-quota-monitor.
+```
+
+O en formato estándar de agentes de Herdr:
+```text
+Read ~/.config/herdr-app/AGENTS.md, then add this mod: github.com/prophetmalik/herdr-quota-monitor
 ```
 
 ### Método 3: Instalación Manual
@@ -67,3 +73,37 @@ Lee RECIPE.md de este repositorio e instala el mod herdr-quota-monitor.
    ```bash
    python ~/.config/herdr-app/mods/agent-quota-bar/collector.py
    ```
+
+---
+
+## Desinstalación
+
+### ¿Cómo desinstalar un mod en Herdr en general?
+En Herdr, los mods residen en la carpeta de configuración del usuario:
+`~/.config/herdr-app/mods/<nombre-del-mod>/`
+- Para desinstalar cualquier mod de terceros, basta con borrar su carpeta en `~/.config/herdr-app/mods/`.
+- Si modificaste un mod nativo que venía de fábrica con Herdr (como `workspace-status`), simplemente borra su carpeta: al reiniciar Herdr, el sistema detecta que falta y vuelve a extraer automáticamente la versión original de fábrica intacta.
+- También puedes presionar la combinación de teclas de emergencia de Herdr: `Ctrl + Alt + Shift + Esc` para restablecer los layouts a su configuración por defecto.
+
+### Desinstalación de Herdr Quota Monitor:
+
+#### Opción 1: Automática (Windows)
+Haz doble clic en `uninstall.bat` o ejecuta en PowerShell:
+```powershell
+powershell -ExecutionPolicy Bypass -File .\uninstall.ps1
+```
+
+#### Opción 2: Manual
+Ejecuta en tu terminal:
+```powershell
+# 1. Eliminar la carpeta del mod
+Remove-Item -Recurse -Force "$HOME\.config\herdr-app\mods\agent-quota-bar"
+
+# 2. Restaurar la barra original de Herdr (se regenera de fábrica al reiniciar)
+Remove-Item -Recurse -Force "$HOME\.config\herdr-app\mods\workspace-status"
+
+# 3. Limpiar archivos de métricas temporales
+Remove-Item -Force "$HOME\.config\herdr-app\data\agent_quota.json"
+Remove-Item -Force "$HOME\.config\herdr-app\data\.hub_cache.json"
+```
+Al reiniciar Herdr, la barra inferior volverá a su estado original de fábrica.
