@@ -1,0 +1,6 @@
+{
+  "name": "herdr-quota-monitor",
+  "version": "1.0.0",
+  "description": "Minimalist real-time token & quota monitor for AI agents in Herdr",
+  "place": "none"
+}
