@@ -16,14 +16,15 @@ New-Item -ItemType Directory -Force -Path $wsDest | Out-Null
 New-Item -ItemType Directory -Force -Path $dataDest | Out-Null
 
 $scriptDir = $PSScriptRoot
+$srcDir = if (Test-Path (Join-Path $scriptDir "mods\agent-quota-bar\main.js")) { Join-Path $scriptDir "mods\agent-quota-bar" } else { $scriptDir }
 
 # 2. Copy mod files
-Copy-Item -Path (Join-Path $scriptDir "main.js") -Destination (Join-Path $modDest "main.js") -Force
-Copy-Item -Path (Join-Path $scriptDir "mod.json") -Destination (Join-Path $modDest "mod.json") -Force
-Copy-Item -Path (Join-Path $scriptDir "collector.py") -Destination (Join-Path $modDest "collector.py") -Force
+Copy-Item -Path (Join-Path $srcDir "main.js") -Destination (Join-Path $modDest "main.js") -Force
+Copy-Item -Path (Join-Path $srcDir "mod.json") -Destination (Join-Path $modDest "mod.json") -Force
+Copy-Item -Path (Join-Path $srcDir "collector.py") -Destination (Join-Path $modDest "collector.py") -Force
 
 # Also update active workspace-status so it takes effect live immediately
-Copy-Item -Path (Join-Path $scriptDir "main.js") -Destination (Join-Path $wsDest "main.js") -Force
+Copy-Item -Path (Join-Path $srcDir "main.js") -Destination (Join-Path $wsDest "main.js") -Force
 
 # 3. Seed initial metrics
 Write-Host "Seeding live metrics..." -ForegroundColor Cyan
